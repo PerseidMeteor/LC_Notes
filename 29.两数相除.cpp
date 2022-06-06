@@ -6,42 +6,44 @@
 #include <vector>
 
 using namespace std;
-
-//两数相除 divided two integers
 class Solution {
 public:
     int divide(int dividend, int divisor) {
-        if(dividend == INT_MIN && divisor == 1)
-            return INT_MAX;
-
-        int res = 1;
-        if(dividend < 0){
-            res = -res;
-            cout << res << endl;
-            dividend = -dividend;
+        if(dividend == 0) return 0;
+        if(divisor == 1) return dividend;
+        if(divisor == -1){
+            if(dividend>INT_MIN) return -dividend;// 只要不是最小的那个整数，都是直接返回相反数就好啦
+            return INT_MAX;// 是最小的那个，那就返回最大的整数啦
         }
-        if(divisor < 0){
-            res = -res;
-            cout << res <<endl;
-            divisor = -divisor;
+        long a = dividend;
+        long b = divisor;
+        int sign = 1; 
+        if((a>0&&b<0) || (a<0&&b>0)){
+            sign = -1;
         }
-
-        int quotient = 0;
-        cout << dividend << "***"<< divisor << endl;
-        while(dividend >= divisor){
-            dividend -= divisor;
-            ++quotient;
+        a = a>0?a:-a;
+        b = b>0?b:-b;
+        long res = div(a,b);
+        if(sign>0)return res>INT_MAX?INT_MAX:res;
+        return -res;
+    }
+    int div(long a, long b){  // 似乎精髓和难点就在于下面这几句
+        if(a<b) return 0;
+        long count = 1;
+        long tb = b; // 在后面的代码中不更新b
+        while((tb+tb)<=a){
+            count = count + count; // 最小解翻倍
+            tb = tb+tb; // 当前测试的值也翻倍
         }
-        if(res == 1)
-            return quotient;
-        else
-            return -quotient;
+        return count + div(a-tb,b);
     }
 };
 int main()
 {
     Solution x;
     cout << x.divide(-6, -2);
+    // cout << INT_MAX << "  " << INT_MIN << endl;
+
     return 0;
 }
 
