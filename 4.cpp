@@ -8,7 +8,7 @@ public:
         int m = nums1.size();
         int n = nums2.size();
         
-        //asd
+        //asd7777
         if(m == 0)
             return n % 2 == 1 ? nums2[n/2]:(double)(nums2[n/2] + nums2[(n-1)/2])/2;
         
