@@ -38,6 +38,7 @@ public:
         return count + div(a-tb,b);
     }
 };
+
 int main()
 {
     Solution x;
